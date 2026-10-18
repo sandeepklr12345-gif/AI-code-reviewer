@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Code Reviewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="logo-mark">&lt;/&gt;</span>
+        <span class="logo-text">AI Code Reviewer</span>
+      </div>
+      <div class="topbar-right">
+        <span id="topbar-status" class="topbar-status"></span>
+        <button id="new-review-btn" class="btn-ghost hidden">New review</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+
+      <!-- ===== Intake screen ===== -->
+      <section id="intake" class="intake">
+        <div class="intake-card">
+          <h1 class="intake-title">Review a file</h1>
+          <p class="intake-subtitle">Paste source code or a diff. Get back prioritized, actionable findings.</p>
+
+          <div class="intake-row">
+            <label class="field">
+              <span class="field-label">Filename</span>
+              <input type="text" id="filename" value="app.py" spellcheck="false" />
+            </label>
+            <label class="field field-narrow">
+              <span class="field-label">Language</span>
+              <select id="language">
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+                <option value="typescript">TypeScript</option>
+                <option value="java">Java</option>
+                <option value="go">Go</option>
+                <option value="auto">Auto-detect</option>
+              </select>
+            </label>
+          </div>
+
+          <textarea id="code-input" spellcheck="false" placeholder="// Paste your code here"></textarea>
+
+          <div class="intake-actions">
+            <span id="intake-status" class="intake-status"></span>
+            <button id="review-btn" class="btn-primary">
+              <span class="btn-label">Run review</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Results screen ===== -->
+      <section id="results" class="results hidden">
+
+        <aside class="sidebar">
+          <div class="sidebar-file">
+            <span class="sidebar-file-icon">&#9679;</span>
+            <span id="sidebar-filename" class="sidebar-filename"></span>
+          </div>
+
+          <div class="stat-grid" id="stat-grid"></div>
+
+          <div class="sidebar-section-label">Findings</div>
+          <div class="issue-list" id="issue-list"></div>
+        </aside>
+
+        <div class="code-panel">
+          <div class="code-panel-header">
+            <span id="code-filename-label" class="code-filename"></span>
+            <span id="code-meta" class="code-meta"></span>
+          </div>
+          <div class="code-scroll">
+            <div id="code-pane" class="code-pane"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===== Empty state ===== -->
+      <section id="empty-state" class="status-state hidden">
+        <div class="status-icon status-icon-ok">&#10003;</div>
+        <p class="status-title">No findings</p>
+        <p class="status-body">This review turned up nothing worth flagging.</p>
+        <button class="btn-ghost" id="empty-back-btn">New review</button>
+      </section>
+
+      <!-- ===== Error state ===== -->
+      <section id="error-state" class="status-state hidden">
+        <div class="status-icon status-icon-error">!</div>
+        <p class="status-title">Review failed</p>
+        <p class="status-body" id="error-message">Something went wrong.</p>
+        <button class="btn-ghost" id="error-back-btn">Try again</button>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
